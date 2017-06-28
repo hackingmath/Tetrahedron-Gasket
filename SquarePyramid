@@ -1,0 +1,73 @@
+from __future__ import division
+
+'''3D Pyramid with square base
+June 27, 2017'''
+
+def setup():
+    size(600,600,P3D)
+    
+    
+def draw():
+    background(0)
+    translate(300,100,-300)
+    rotateY(300-mouseX/400.0)
+    rotateX((mouseY-300)/400.0)
+    gasket(300,4)
+    
+def gasket(length, level):
+    sz = length
+    h = sz*sqrt(3)/2.0
+    if level == 0:
+        pyramid(length,0,0,0)
+    else:
+        #top
+        pushMatrix()
+        translate(0,-h/2,0)
+        gasket(length/2.0,level-1)
+        translate(sz/2,h,sz/2)
+        gasket(length/2.0,level-1)
+        translate(-sz,0,0)
+        gasket(length/2.0,level-1)
+        translate(0,0,-sz)
+        gasket(length/2.0,level-1)
+        translate(sz,0,0)
+        gasket(length/2.0,level-1)
+        popMatrix()
+        
+        
+    
+def pyramid(sz,x,y,z):
+    h = sz*sqrt(3)/2.0
+    #noFill()
+    fill(255,0,0)#red
+    stroke(255)
+    beginShape()
+    #side1
+    vertex(x,y-h,z)
+    vertex(x-sz,y+h,z+sz)
+    vertex(x-sz,y+h,z-sz)
+    endShape(CLOSE)
+    
+    #side2
+    beginShape()
+    #stroke(255)
+    vertex(x,y-h,z)
+    vertex(x-sz,y+h,z+sz)
+    vertex(x+sz,y+h,z+sz)
+    endShape(CLOSE)
+    
+    #side3
+    #stroke(255)
+    beginShape()
+    vertex(x,y-h,z)
+    vertex(x+sz,y+h,z-sz)
+    vertex(x+sz,y+h,z+sz)
+    endShape(CLOSE)
+    
+    #side4
+    #stroke(255)
+    beginShape()
+    vertex(x,y-h,z)
+    vertex(x-sz,y+h,z-sz)
+    vertex(x+sz,y+h,z-sz)
+    endShape(CLOSE)
